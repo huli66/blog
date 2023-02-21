@@ -3,7 +3,7 @@ name: Deploy
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   deploy:
@@ -13,11 +13,10 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-          cache: yarn
-      - run: yarn install --frozen-lockfile
+      - run: npm install
 
       - name: Build
-        run: yarn docs:build
+        run: npm docs:build
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
