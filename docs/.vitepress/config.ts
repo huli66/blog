@@ -27,63 +27,70 @@ function getDirctSidebar(pathname: string) {
 
 export default defineConfig({
   lang: "en-US",
-  title: "Huli66",
-  titleTemplate: "我的网站",
+  title: "HuJianjun",
+  titleTemplate: "明天会更好",
   description: "Huli66 study",
   appearance: true,
   lastUpdated: true,
+  base: "/blog-vitepress/",
+  head: [
+    ["link", { rel: "icon", href: "/head.jpg", sizes: "16x16" }],
+  ],
 
   themeConfig: {
     logo: "/logo.svg",
     nav: nav(),
     sidebar: {
-      "/blogs": [
-        { text: "Blogs", items: getDirctSidebar("blogs")}
-      ],
+      "/web": [{ text: "大前端", items: getDirctSidebar("web")}],
+      "/developer": [{ text: "程序员基础", items: getDirctSidebar("developer")}],
+      "/about": [{ text: "关于", items: getDirctSidebar("about")}],
       "/": getDirctSidebar("/blogs"),
     },
-    siteTitle: "上善若水",
-    outlineTitle: "右侧栏目录",
+    siteTitle: "🍁狐狸",
+    outlineTitle: "目录",
     socialLinks: [
-      { icon: "github", link: "https://github.com" },
+      { icon: "github", link: "https://github.com/huli66" },
       { icon: "twitter", link: "" },
     ],
     footer: {
-      message: "Release under the MIT License",
-      copyright: "Copyright © 2019-present Jianjun Hu",
+      message: "风华正茂 书生意气",
+      copyright: "Copyright © 2023-present Jianjun Hu",
     },
     editLink: {
-      pattern: "https://github.com/vuejs/vitepress/edit/main/docs/:path",
+      pattern: "https://github.com/huli66/blog-vitepress/:path",
       text: "Edit this page on GitHub",
     },
-    lastUpdatedText: "Updated Date",
+    lastUpdatedText: "最近更新时间",
   },
 });
 
 function nav() {
   return [
-    { text: "", link: "" },
-    { text: "", link: "" },
-    { text: "", link: "" },
-    { text: "", link: "" },
     {
-      text: "menu",
+      text: "大前端",
       items: [
-        { text: "", link: "" },
+        { text: "JS&H5&C3", link: "/web/index" },
+        { text: "React", link: "/web/js" },
+        { text: "工程化", link: "/web/js" },
+        { text: "翻译", link: "/web/js" },
       ]
-    }
-  ]
-}
-
-function sideBarBlogs() {
-  return [
-    { text: "barTitle", link: "" },
-    {
-      text: "title",
-      collpased: false,
+    },
+    { 
+      text: "程序员基础",
       items: [
-        { text: "bar", link: "" },
+        { text: "算法", link: "/developer/algo" },
+        { text: "设计模式", link: "/developer/index" },
+        { text: "算法", link: "/developer/algo" },
+        { text: "开发者技能", link: "/developer/algo" },
       ]
-    }
+    },
+    { 
+      text: "关于",
+      items: [
+        { text: "本站历史", link: "/about/index" },
+        { text: "生活记录", link: "/about/life" },
+        { text: "个人简介", link: "/about/introduce" }
+      ]
+    },
   ]
 }
