@@ -5,11 +5,32 @@ lastUpdated: true
 
 # Nginx
 
-安装前置软件
+环境: CentOS 7.8`
+
+## 安装前置软件
 
 ```sh
 yum -y install gcc gcc-c++ autoconf pcre-devel make automake
 yum -y install wget httpd-tools vim
+```
+
+CentOS 本身的 yum 源里面是没有 Nginx 的，所以需要换源，当然也可以下载解压安装
+如果是 阿里云 或者 腾讯云 已经配置好了，就可以跳过换源步骤，直接跳到安装步骤
+
+```sh
+# 备份
+mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
+
+# 下载新的 CentOS-Base.repo 到 /etc/yum.repos.d/
+wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+# 或者
+curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+
+# 服务器的包信息下载到本地缓存
+yum makecache
+
+# 安装 epel 源，然后 yum install 命令就可以从 epel 源安装额外的软件包了
+yum install epel-release
 ```
 
 `mv` 移动或者重命名文件
@@ -19,7 +40,7 @@ yum -y install wget httpd-tools vim
 ```sh
 #
 yum list | grep nginx
-#
+# 如果不换源会报错 No package nginx available
 yum install nginx
 
 nginx -v

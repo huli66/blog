@@ -67,7 +67,7 @@ function parser(tokens) {
       };
     }
 
-    if (token.type === "strint") {
+    if (token.type === "string") {
       current++;
       return {
         type: "StringLiteral",
