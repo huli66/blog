@@ -72,7 +72,6 @@ function nav() {
         { text: "JS&H5&C3", link: "/web/index" },
         { text: "React", link: "/web/js" },
         { text: "工程化", link: "/web/js" },
-        { text: "翻译", link: "/web/js" },
       ]
     },
     { 
@@ -82,6 +81,14 @@ function nav() {
         { text: "设计模式", link: "/developer/index" },
         { text: "算法", link: "/developer/algo" },
         { text: "开发者技能", link: "/developer/algo" },
+      ]
+    },
+    { 
+      text: "翻译",
+      items: [
+        { text: "Next.js", link: "/developer/algo" },
+        { text: "Babel", link: "/developer/index" },
+        { text: "blogs", link: "/developer/algo" },
       ]
     },
     { 
