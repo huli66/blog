@@ -49,6 +49,8 @@ nginx -v
 rpm -ql nginx
 ```
 
+也可以参考手动下载安装 [Nginx 手动安装](https://www.runoob.com/linux/nginx-install-setup.html)
+
 ## 配置
 
 `nginx.conf` 是 `Nginx` 的总配置文件，也是搭建服务器经常调整的文件
