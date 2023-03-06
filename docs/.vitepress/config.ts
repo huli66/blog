@@ -123,7 +123,9 @@ function nav() {
       items: [
         { text: "JS&H5&C3", link: "/web/protogenesis/index" },
         { text: "React", link: "/web/react/index" },
-        { text: "工程化", link: "/web/vue/index" },
+        { text: "Vue", link: "/web/vue/index" },
+        { text: "工程化", link: "/web/engineering/index" },
+        { text: "翻译", link: "/web/translate/index" },
       ],
     },
     {
