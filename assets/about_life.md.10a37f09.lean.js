@@ -1,1 +1,0 @@
-import{_ as e,c as t,o as a}from"./app.bc839666.js";const f=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"about/life.md","lastUpdated":1677851143000}'),o={name:"about/life.md"};function r(s,c,n,i,p,d){return a(),t("div")}const l=e(o,[["render",r]]);export{f as __pageData,l as default};
