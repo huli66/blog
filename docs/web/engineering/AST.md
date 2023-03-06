@@ -1,3 +1,8 @@
+---
+title: AST
+lastUpdated: true
+---
+
 # AST
 
 **抽象语法树（Abstract Syntax Tree，AST）是源码语法结构的一种树状抽象表示**在代码的语法检查、风格检查、格式化、高亮、错误提示、自动补全等方面均有广泛应用
@@ -42,3 +47,31 @@ const visitor = {
 ```sh
 npm install @babel/core -D # 里面包含了 @babel/parser @babel/traverse @babel/generate 等
 ```
+
+## 最佳实践
+
+### 尽量避免遍历抽象语法树
+
+**遍历 AST 的代价很昂贵，并且容易做出非必要的遍历，可能是数以万计的多余操作**
+
+Babel 对此做出了尽可能的优化，方法是合并多个 visitor ，能够在单次遍历内做完事情的话就合并它们
+
+- 及时合并访问者
+
+```js
+path.traverse({
+	Identifier(path) {},
+});
+
+path.traverse({
+	BinaryExpression(path) {},
+});
+
+// 两个访问器合并
+path.traverse({
+	Identifier(path) {},
+	BinaryExpression(path) {},
+});
+```
+
+- 可以手动查找就不要遍历
