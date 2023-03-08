@@ -194,19 +194,172 @@ echo -e "OK! \c" # 显示不换行
 echo "It is a test" > myfile # 显示结果定向至文件
 echo '$name' # 单引号原样输出字符串，不转义不去变量
 echo `date` # 反引号显示命令执行结果
+echo $(date) # $() 也是执行命令，更推荐使用反引号
 
 ```
 
 ## printf 命令
 
+- `print format-string [arguments]`
+
+  - format: 格式控制字符串 `%s` 输出一个字符串，`%d` 整型输出，`%f` 输出实数，小数形式输出，
+    `-8` 只宽度为 8 个字符，`-` 表示左对齐，没有则右对齐，`.2` 表示保留两位小数(`%f` 输出没有明确表示保留几位会默认保留 6 位)
+  - arguments: 参数列表
+
+  **格式只指定了一个（一部分），多出的参数依然会按照格式输出，format-string 被重用**
+  **格式字符串单引号双引号都可以，没有引号也可以输出，但是转义序列 `\n` 会有问题**
+  **如果缺少部分参数，`%s` `%c` 用 NULL （不显示） 代替，`%d` `%f` 用 0 代替**
+
+```sh
+# print format-string [arguments]
+printf "%-10s %-8s %-4s\n" 姓名 性别 体重/kg
+printf "%-10s %-8s %-4.2f\n" huli M 48.666
+# 格式字符串重用，下面会按照该格式输出两行
+printf "%-10s %-8s %-4.2f\n" huli M 48.666 yuele M 66
+# 第三行会自动按照规则补齐
+printf "%-10s %-8s %-4.2f\n" huli M 48.666 yuele M 66 null
+```
+
 ## test 命令
 
+检查某个条件是否成立，可以进行 数值、字符、文件 三个方面的测试
+
+| 场景     | 说明                                                                                                                                                     |                                                   |
+| -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
+| 数值测试 | -eq -ne -gt -ge -lt -le                                                                                                                                  | if test $[num1] -eq $[num2],[] 中执行基本算术运算 |
+| 字符测试 | = != -z(字符串长度为零则真) -n(字符串长度不为零则真)                                                                                                     | if test -z $num1                                  |
+| 文件测试 | -e(文件存在) -r(文件存在且可读) -w -x -s(文件存在且至少有一个字符) -d(存在且为目录) -f(存在且为普通文件) -c(存在且为字符型特殊文件) -b(存在且块特殊文件) |
+
+**代码中的 [] 执行基本的算数运算**
+
+**Shell 还提供了 与(`-a`)、或(`-o`)、非(`!`) 三个逻辑操作符用于将测试条件连接起来，优先级 `!` 最高，`-a` 次之，`-o` 最低**
+
+```sh
+num1=200
+num2=100
+if test $[num1] -eq $[num2]
+then
+  echo 'equal!'
+else
+  echo 'not equal...'
+fi
+
+if test -e ./notFile -o -e ./bash
+then
+  echo '至少一个文件存在'
+```
+
 ## 流程控制
+
+- 分支
+
+```sh
+if condition
+then
+  command1
+  command2
+  ...
+elif condition2
+then
+  command3
+# 如果 else 里没有要执行的命令，就不要写这个 else
+else
+  command4
+# 结尾的 fi 就是 if 倒过来，也是 finally 的缩写
+fi
+
+# 写成一行也可以
+if [ $[4-2] -gt 1 ]; then echo "true"; echo "command2"; fi
+```
+
+- for 循环
+
+```sh
+# 写成一行
+for var 1 2 3 4; do echo "value is $var"; echo "command2"; done
+
+# 用空格分开，循环一次执行所有命令
+for var in item1 item2 item3
+do
+  command1
+  command2
+  ...
+done
+```
+
+- while 语句
+
+```sh
+int=1
+while (( $init <= 5))
+do
+  echo $int
+  let "int++"
+done
+```
+
+- 无限循环
+
+```sh
+while :
+do
+  command
+done
+
+while true
+do
+  command
+done
+
+for (( ; ; ))
+```
+
+- until 循环，意思和 `while` 刚好相反，条件判断为 true 时停止
+
+```sh
+until condition
+do
+  command
+done
+```
+
+- case ... esac
+
+多选择语句，类似其他语言的 `switch ... case`，是多分支选择每个分支用右圆括号开始，两个分号表示 `break` 即执行结束，跳出整个 `case ... esac` 语句，`esac` 结尾（与 case 相反）
+
+```sh
+value=$1
+case $value in
+1)
+  echo "1"
+  ;;
+2)
+  echo "2"
+  ;;
+esac
+```
+
+- 跳出循环
+
+**`break` 跳出当前循环**
+
+**`continue` 跳出本次循环**
 
 ## 函数
 
 ## 输入/输出重定向
 
 ## 文件包含
+
+在一个 Shell 脚本内部包含外部脚本，这样可以很方便封装公用代码和公式
+
+```sh
+# . 和文件名直接空一格
+. filename
+. ./test.sh
+
+# 或者
+source filename
+```
 
 [参考教程](https://www.runoob.com/linux/linux-shell.html)
