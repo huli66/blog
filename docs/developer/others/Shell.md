@@ -443,6 +443,9 @@ awk '{print $1}'
 tail -n 2 file # 显示文件尾部最后 2 行的内容
 tail -c 5 file # 显示最后的 5 个字节内容
 tail -f filename # 循环刷新，显示文件最为不的内容
+
+# export 配置环境变量
+export USER_ID=HULIJIANJUN
 ```
 
 [参考教程](https://www.runoob.com/linux/linux-shell.html)
