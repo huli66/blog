@@ -226,3 +226,5 @@ npm install -D cross-env
   }
 }
 ```
+
+参考文档 [Electron-builder 打包详解](https://github.com/QDMarkMan/CodeBlog/blob/master/Electron/electron-builder%E6%89%93%E5%8C%85%E8%AF%A6%E8%A7%A3.md)
