@@ -347,7 +347,70 @@ esac
 
 ## 函数
 
+可以带 `function` 进行定义函数，也可以不带
+可以显式返回一个值，如果不加将以最后一条命令运行结果作为返回值，**return 后跟数值 n(0-255)**
+
+| 参数处理 | 说明                                                                               |
+| -------- | ---------------------------------------------------------------------------------- |
+| $1 $2 .. | 第 n 个参数                                                                        |
+| $#       | 传递给脚本或函数的参数个数                                                         |
+| $\*      | 以一个单字符串显示所有向脚本传递的参数                                             |
+| $$       | 脚本运行的当前进程 ID 号                                                           |
+| $!       | 后台运行的最后一个进程 ID 号                                                       |
+| $@       | 与 $\* 相同，但是使用时加引号，在引号中返回每个参数                                |
+| $-       | 显示 Shell 使用的当前选项，与 set 命令功能相同                                     |
+| $?       | 显示最后命令的退出状态，0 表示没有错误，其他值表示错误，（也可以用于获取返回值？） |
+
+```sh
+[ function ] funname [()]
+{
+  action
+  [return int;]
+}
+
+# 带参数执行
+funname arg1 arg2 ...
+```
+
+```sh
+#!/bin/bash
+
+funWithReturn(){
+  echo "arg1: $1"
+  echo "arg2: $2"
+  echo "Please Input A Number:"
+  read anotherNum
+  echo "sum is $(($1 + $anotherNum))"
+  return anotherNum
+}
+funWithReturn 1 2 3 4 5
+echo "return is $?"
+```
+
 ## 输入/输出重定向
+
+| 命令            | 说明                                             |
+| --------------- | ------------------------------------------------ |
+| command > file  | 将输出重定向到 file                              |
+| command < file> | 将输入重定向到 file                              |
+| command >> file | 将输出以追加的方式重定向到 file                  |
+| n > file        |                                                  |
+| n >> file       |                                                  |
+| n >& m          |                                                  |
+| n <& m          |                                                  |
+| << tag          | 将开始标记 tag 和结束标记 tag 直接的内容作为输入 |
+
+```sh
+# 用 wc -l 命令计算行数
+wc -l << EOF
+hello
+world
+!
+EOF
+
+# 不希望显示命令结果，可以重定向到 /dev/null ，这个特殊文件内容都会被丢弃
+command > /dev/null
+```
 
 ## 文件包含
 
@@ -360,6 +423,26 @@ esac
 
 # 或者
 source filename
+```
+
+## 其他
+
+记录在工作中碰到的情况
+
+```sh
+# 连续执行命令，上一句的结果作为下一句的参数
+command1 | command2 | ...
+
+# 从给定的字符串中寻找匹配内容
+grep -e Hello Hello-world
+
+# awk 内置函数
+awk '{print $1}'
+
+# tail 命令，查看文件内容
+tail -n 2 file # 显示文件尾部最后 2 行的内容
+tail -c 5 file # 显示最后的 5 个字节内容
+tail -f filename # 循环刷新，显示文件最为不的内容
 ```
 
 [参考教程](https://www.runoob.com/linux/linux-shell.html)
