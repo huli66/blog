@@ -235,7 +235,67 @@ const value: CommonNS.Value = "licy";
 
 ### 函数重载
 
+函数重载是静态类型语言很重要的一个能力，很多时候函数需要兼容多种参数类型，根据入参返回不同类型数据
+**实现方法就是多声明几个函数类型，然后在最后一个函数中进行实现，注意函数实现中的类型一定要于上面的所有类型兼容（只是类型重载，函数实现并不会重载），重载也只是为了更加精确的类型判断和类型提示**
+
+```ts
+// 用断言区分
+const data = { name: "licy" };
+const getData1 = (stringify: boolean = false): string | object => {
+  if (stringify === true) {
+    return JSON.stringify(data);
+  } else {
+    return data;
+  }
+};
+// 此时返回结果类型固定为 string | object，实际上是可以确定类型的
+const res1 = getData1(); // string | object
+const res2 = getData1(true); // string | object
+
+// 借助函数重载进行改造
+function getData(stringify: true): string;
+function getData(stringify?: false): object;
+function getData(stringify: boolean = false): unknown {
+  if (stringify === true) {
+    return JSON.stringify(data);
+  } else {
+    return data;
+  }
+}
+// 此时返回值会精确类型
+const res3 = getData(); // object
+const res4 = getData(true); // string
+```
+
 ### 泛型
+
+接口要支持多种类型的时候就可以使用泛型
+
+```ts
+// 泛型改造上面的函数
+const data = { name: "licy" };
+function getData<
+  T extends boolean = false,
+  R = T extends true ? string : object
+>(stringify?: T): R {
+  if (stringify === true) {
+    return JSON.stringify(data) as unknown as R;
+  } else {
+    return data as unknown as R; // 双重断言，否则会报错
+  }
+}
+const res1 = getData(); // obejct
+const res2 = getData(true); // string
+
+// 泛型类型
+type ValueOf<T> = T[keyof T];
+
+interface User {
+  name: "licy";
+}
+type A = keyof User; // 'name'
+type B = Valueof<User>; // 'licy'
+```
 
 ### 内置的高级函数
 
