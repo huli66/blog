@@ -301,11 +301,65 @@ type B = Valueof<User>; // 'licy'
 
 ### 协变 & 逆变
 
+string 可以赋值给 unknown 可以理解为 string 是 unknown 的子类型，正常情况下这个关系即子类型可以赋值给父类型是不会改变的，我们称之为协变
+但是在某种情况下关系出现了颠倒，我们称之为逆变
+
+```ts
+interface Animal {
+  name: string;
+}
+interface Cat extends Animal {
+  catBark: string;
+}
+interface OrangeCat extends Cat {
+  color: "orange";
+}
+// ts 中不一定要使用继承关系，只要 A 的类型在 B 中全部都有，且 B 比 A 还要多一些类型
+// 类似集合 A 属于 B 一样，就可以认为 B 是 A 的子类型
+
+const cat: Cat = {
+  name: "maomao",
+  catBark: "miaomiao~",
+};
+const animal: Animal = cat; // 可以赋值，多出属性也不会报错
+
+// 协变与逆变，以下那个类型是其子类型
+type FnCat = (value: Cat) => Cat;
+
+type FnAnimal = (value: Animal) => Animal;
+type FnOrangeCat = (value: OrangeCat) => OrangeCat;
+type FnAnimalOrangeCat = (value: Animal) => OrangeCat;
+type FnOrangeCatAnimal = (value: OrangeCat) => Animal;
+
+type RES1 = FnAnimal extends FnCat ? true : false; // false
+type RES2 = FnOrangeCat extends FnCat ? true : false; // false
+type RES3 = FnAnimalOrangeCat extends FnCat ? true : false; // true
+type RES4 = FnOrangeCatAnimal extends FnCat ? true : false; // false
+
+const fn: FnAnimalOrangeCat = (val) => {
+  console.log(val.color);
+  return oCat;
+};
+
+const fn2: FnCat = fn;
+
+const oCat = fn2();
+```
+
+为什么最后的 RES3 是可以的呢
+返回值：假设使用了 FnCat 的返回值的 cat.catBark 属性，如果返回值是 Animal 则不会有这个属性，会导致调用报错，所以返回值必须是 Cat 的子类型 OrangeCat
+参数：假设传入的参数中使用了 orangeCat.color 但是对外的类型参数还是 Cat 没有 color 属性，就会导致该函数运行时内部报错
+结论：**返回值是 协变 ，入参是 逆变**，函数 A 如果是函数 B 的子类型，则 A 的入参应该是 B 的入参的父类型，返回值则是 子类型（**需要避免入参类型判断通过但是运行报错和返回值调用时类型判断正确但实际运行时报错**）
+
+:::tip
+注意如果 `tsconfig.json` 中的 `strictFunctionTypes` 是 `false` 则上述的 RES2 也是 `true` ，这样表明当前函数是支持双向协变的，默认此项是 `false，如果是新项目建议设置为` `true` ，允许双向协变是有风险的，可能在运行时报错
+:::
+
 ## 实践场景
 
 ## 周边工具
 
-TS 代码演练场
+[TS 代码演练场](https://www.typescriptlang.org/play)
 
 VSCode 编辑器：默认使用 VSCode 的 TS 版本，可能存在 VSCode 的 TS 版本和编译版本不一致
 
@@ -314,3 +368,6 @@ TS 类型工具
 Lint 检查工具：由于 TS Lint 和 ES Lint 过程高度相似，所以目前 TSLint 被并入 ESLint 了，TSLint 官方标记为放弃维护，使用 `@typescript-eslint/eslint-plugin` `@typescript-eslint/parser` 进行代码风格检查
 
 类型覆盖工具 `type-coverage` ，类型覆盖度检测
+
+[TS 挑战](https://github.com/type-challenges/type-challenges/blob/main/README.zh-CN.md)
+[深入理解 TypeScript（TypeScript Deep Dive）](https://jkchao.github.io/typescript-book-chinese/#why)
