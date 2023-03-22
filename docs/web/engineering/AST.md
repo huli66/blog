@@ -48,6 +48,53 @@ const visitor = {
 npm install @babel/core -D # 里面包含了 @babel/parser @babel/traverse @babel/generate 等
 ```
 
+[astexplorer.net](https://astexplorer.net/)可以在线转换为 AST
+
+```js
+const parser = require("@babel/parser");
+const traverse = require("@babel/traverse");
+const generator = require("@babel/generator");
+
+// 源代码
+const code = `
+const hello = () => {};
+`;
+// 1.将源代码转换成 ast
+const ast = parser.parse(code);
+// 2.对比需要改动的 ast 部分，写合适的 visitor，通过 traverse 执行
+const visitor = {
+  Identifier(path) {
+    const { node } = path;
+    if (node.name === "hello") {
+      node.name = "hi";
+    }
+  },
+};
+traverse.default(ast, visitor);
+// 3.通过 generator 再将 ast 生成新的代码
+const result = generator.default(ast, {}, code);
+console.log(result.code);
+
+/* 也可以写成插件 */
+const namePlugin = {
+  visitor: {
+    Identifier(path) {
+      const { node } = path;
+      if (node.name === "hello") {
+        node.name = "hhh";
+      }
+    },
+  },
+};
+
+const sourceCode = core.transform(code, {
+  plugins: [namePlugin],
+});
+console.log(sourceCode.code);
+```
+
+**babel 插件本质上就是一个对象，对象里面有一个 `visitor` 属性，也是一个对象，key 为要处理的类型，value 是对应的函数，传入 `path` 作为参数**
+
 ## 最佳实践
 
 ### 尽量避免遍历抽象语法树
@@ -60,17 +107,17 @@ Babel 对此做出了尽可能的优化，方法是合并多个 visitor ，能�
 
 ```js
 path.traverse({
-	Identifier(path) {},
+  Identifier(path) {},
 });
 
 path.traverse({
-	BinaryExpression(path) {},
+  BinaryExpression(path) {},
 });
 
 // 两个访问器合并
 path.traverse({
-	Identifier(path) {},
-	BinaryExpression(path) {},
+  Identifier(path) {},
+  BinaryExpression(path) {},
 });
 ```
 

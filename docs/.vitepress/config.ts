@@ -65,6 +65,16 @@ export default defineConfig({
               items: getDirctSidebar("web/engineering"),
             },
             {
+              text: "Node",
+              collapsed: false,
+              items: getDirctSidebar("web/node"),
+            },
+            {
+              text: "TypeScript",
+              collapsed: false,
+              items: getDirctSidebar("web/TypeScript"),
+            },
+            {
               text: "翻译",
               collapsed: false,
               items: getDirctSidebar("web/translate"),
@@ -136,13 +146,13 @@ function nav() {
         { text: "开发者技能", link: "/developer/others/index" },
       ],
     },
-    { 
+    {
       text: "翻译",
       items: [
         { text: "Next.js", link: "/developer/algo" },
         { text: "Babel", link: "/developer/index" },
         { text: "blogs", link: "/developer/algo" },
-      ]
+      ],
     },
     {
       text: "关于",
