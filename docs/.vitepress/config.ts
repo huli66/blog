@@ -42,7 +42,7 @@ export default defineConfig({
     sidebar: {
       "/web": [
         {
-          text: "大前端",
+          text: "前端学习",
           items: [
             {
               text: "JS & H5 & C3",
@@ -129,7 +129,13 @@ export default defineConfig({
 function nav() {
   return [
     {
-      text: "大前端",
+      text: "闲杂随笔",
+      items: [
+        { text: "问题解决", link: "/web/"},
+      ],
+    },
+    {
+      text: "前端学习",
       items: [
         { text: "JS&H5&C3", link: "/web/protogenesis/index" },
         { text: "React", link: "/web/react/index" },
@@ -157,7 +163,7 @@ function nav() {
     {
       text: "关于",
       items: [
-        { text: "本站历史", link: "/about/index" },
+        { text: "本站历史", link: "/about/siteHistory" },
         { text: "生活记录", link: "/about/life" },
         { text: "个人简介", link: "/about/introduce" },
       ],
