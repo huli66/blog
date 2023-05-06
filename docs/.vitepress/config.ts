@@ -83,7 +83,6 @@ export default defineConfig({
         },
       ],
       "/developer": [
-        { text: "程序员基础", items: getDirctSidebar("developer") },
         {
           text: "程序员基础",
           items: [
