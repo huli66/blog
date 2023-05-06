@@ -13,13 +13,13 @@ hero:
       link: https://github.com/huli66
 
 features:
-  - icon: ⚡
-    title: Vite, The DX that can't be beat
-    details: Lorem ipsum...
-  - icon: 🖖
-    title: Power of Vue meets Markdown
-    details: Lorem ipsum...
+  - icon: 📖
+    title: 读过的书和学习记录
+    details: 明天会更好
+  - icon: 🌲
+    title: 生活味道
+    details: 不一样的颜色
   - icon: 🛠️
-    title: Simple and minimal, always
-    details: Lorem ipsum...
+    title: 解决问题
+    details: 随笔记录
 ---
