@@ -29,7 +29,7 @@ function getDirctSidebar(pathname: string) {
 export default defineConfig({
   lang: "en-US",
   title: "HuJianjun",
-  titleTemplate: "明天会更好",
+  titleTemplate: "胡建军的博客",
   description: "Huli66 study",
   appearance: true,
   lastUpdated: true,
@@ -107,7 +107,7 @@ export default defineConfig({
       "/about": [{ text: "关于", items: getDirctSidebar("about") }],
       "/": getDirctSidebar("/blogs"),
     },
-    siteTitle: "🍁狐狸",
+    siteTitle: "🍁狐篱",
     outlineTitle: "目录",
     socialLinks: [
       { icon: "github", link: "https://github.com/huli66" },
@@ -129,9 +129,7 @@ function nav() {
   return [
     {
       text: "闲杂随笔",
-      items: [
-        { text: "问题解决", link: "/web/"},
-      ],
+      items: [{ text: "问题解决", link: "/web/" }],
     },
     {
       text: "前端学习",
