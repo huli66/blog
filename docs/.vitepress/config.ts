@@ -27,7 +27,7 @@ function getDirctSidebar(pathname: string) {
 }
 
 export default defineConfig({
-  lang: "en-US",
+  lang: "zh-cn",
   title: "HuJianjun",
   titleTemplate: "胡建军的博客",
   description: "Huli66 study",
@@ -40,9 +40,26 @@ export default defineConfig({
     logo: "/logo.svg",
     nav: nav(),
     sidebar: {
+      "/blogs": [
+        {
+          text: "随笔",
+          items: [
+            {
+              text: "随手记录",
+              // collapsed: false,
+              items: getDirctSidebar("blogs/notes"),
+            },
+            {
+              text: "问题解决",
+              collapsed: true,
+              items: getDirctSidebar("blogs/problems"),
+            },
+          ],
+        },
+      ],
       "/web": [
         {
-          text: "前端学习",
+          text: "学习记录",
           items: [
             {
               text: "JS & H5 & C3",
@@ -88,12 +105,12 @@ export default defineConfig({
           items: [
             {
               text: "算法",
-              collapsed: false,
+              collapsed: true,
               items: getDirctSidebar("developer/algorithms"),
             },
             {
               text: "设计模式",
-              collapsed: false,
+              collapsed: true,
               items: getDirctSidebar("developer/designpattern"),
             },
             {
@@ -128,11 +145,16 @@ export default defineConfig({
 function nav() {
   return [
     {
-      text: "闲杂随笔",
-      items: [{ text: "问题解决", link: "/web/" }],
+      text: "随笔",
+      link: "/blogs/index",
+      items: [
+        { text: "问题解决", link: "/blogs/problems/index" },
+        { text: "随手记录", link: "/blogs/notes/index" },
+      ],
     },
     {
-      text: "前端学习",
+      text: "学习记录",
+      link: "/web/index",
       items: [
         { text: "JS&H5&C3", link: "/web/protogenesis/index" },
         { text: "React", link: "/web/react/index" },
@@ -143,6 +165,7 @@ function nav() {
     },
     {
       text: "程序员基础",
+      link: "/developer/index",
       items: [
         { text: "算法", link: "/developer/algorithms/index" },
         { text: "设计模式", link: "/developer/designpattern/index" },
@@ -151,19 +174,21 @@ function nav() {
     },
     {
       text: "翻译",
-      items: [
-        { text: "Next.js", link: "/developer/algo" },
-        { text: "Babel", link: "/developer/index" },
-        { text: "blogs", link: "/developer/algo" },
-      ],
+      link: "/translate/index",
+      // items: [
+      //   { text: "Next.js", link: "/developer/algo" },
+      //   { text: "Babel", link: "/developer/index" },
+      //   { text: "blogs", link: "/developer/algo" },
+      // ],
     },
     {
       text: "关于",
-      items: [
-        { text: "本站历史", link: "/about/siteHistory" },
-        { text: "生活记录", link: "/about/life" },
-        { text: "个人简介", link: "/about/introduce" },
-      ],
+      link: "/about/index",
+      // items: [
+      //   { text: "本站历史", link: "/about/siteHistory" },
+      //   { text: "生活记录", link: "/about/life" },
+      //   { text: "个人简介", link: "/about/introduce" },
+      // ],
     },
   ];
 }
