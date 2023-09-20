@@ -37,7 +37,7 @@ export default defineConfig({
   head: [["link", { rel: "icon", href: "/head.jpg", sizes: "16x16" }]],
 
   themeConfig: {
-    logo: "/logo.svg",
+    logo: "/assets/half-fox.svg",
     nav: nav(),
     sidebar: {
       "/blogs": [
