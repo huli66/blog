@@ -59,7 +59,7 @@ export default defineConfig({
       ],
       "/web": [
         {
-          text: "学习记录",
+          text: "前端学习",
           items: [
             {
               text: "JS & H5 & C3",
@@ -153,7 +153,7 @@ function nav() {
       ],
     },
     {
-      text: "学习记录",
+      text: "前端学习",
       link: "/web/index",
       items: [
         { text: "JS&H5&C3", link: "/web/protogenesis/index" },
