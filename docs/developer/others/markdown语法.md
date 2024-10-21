@@ -65,6 +65,7 @@ _斜体_
 
 ### 图片
 
+```markdown
 ![GitHub Logo](/images/logo.png)
 
 格式: ![Alt Text](url)
@@ -72,6 +73,7 @@ _斜体_
 其他写法 ![alt Text][url]
 
 [url]: /images/logo.png
+```
 
 ### 选项
 
