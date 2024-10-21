@@ -139,6 +139,14 @@ export default defineConfig({
       text: "Edit this page on GitHub",
     },
     lastUpdatedText: "最近更新时间",
+    search: {
+      provider: "algolia",
+      options: {
+        appId: "KSMW36UMSB",
+        apiKey: "2b3671a83e0f881ed0dbe19dad6f3b26",
+        indexName: "c189d3e5af5524272d687b668fa9cf4f",
+      },
+    },
   },
 });
 

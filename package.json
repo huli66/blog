@@ -17,7 +17,7 @@
     "@types/node": "^18.14.0",
     "busuanzi.pure.js": "^1.0.3",
     "gitalk": "^1.8.0",
-    "vitepress": "^1.0.0-alpha.47",
+    "vitepress": "^1.4.1",
     "vue": "^3.2.47"
   }
 }
